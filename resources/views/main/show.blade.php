@@ -1,6 +1,7 @@
 <x-layout>
     <div class="form">
-        <form id="cut-form">
+        <form id="cut-form" action="/link_shortening" method="POST">
+            @csrf
             <input class="link" id="link" name="link" type="text">
             <input class="btn " id="send" type="submit" value="Shrt">
             <input class="btn hidden" id="copy" type="button" value="✂">
