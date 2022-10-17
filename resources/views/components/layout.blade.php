@@ -26,7 +26,7 @@
             var formNm = $('#' + formID);
             $.ajax({
                 type: "POST",
-                url: 'cut_link/cut_link.php',
+                url: '/getlink',
                 data: formNm.serialize(),
                 beforeSend: function () {
                 },
