@@ -1,0 +1,29 @@
+$color1: #00665E;
+$color2: #FF9340;
+*{
+    margin: 0;
+    padding: 0;
+}
+.wrapper{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .message{
+        display: flex;
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        font-size: 32px;
+        color: $color1;
+        div{
+            padding: 15px;
+
+            $border: $color2 solid 2px;
+            &:first-child{
+                border-right: $border;
+            }
+            &:last-child{
+                border-left: $border;
+            }
+        }
+    }
+}
