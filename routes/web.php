@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\LinkController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainPageController;
-use \App\Http\Controllers\TokenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,4 +18,6 @@ use \App\Http\Controllers\TokenController;
 
 Route::get('/', [MainPageController::class, 'Show']);
 
-Route::get('/{token}', [\App\Http\Controllers\TokenController::class, 'Redirect']);
+Route::post('/getlink', [LinkController::class, 'LongToShort']);
+
+Route::get('/{token}', [LinkController::class, 'ShortToLong']);
