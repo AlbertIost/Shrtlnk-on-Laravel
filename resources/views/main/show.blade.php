@@ -14,9 +14,14 @@
     <div class="line">
         <h2>Укорачиватель ссылок</h2>
         <div class="sign">
+            @guest
             <a href="{{ route('user.login') }}" class="in">Sign in</a>
             <span class="divider">/</span>
             <a href="{{ route('user.registration') }}" class="up">Sign up</a>
+            @endguest
+            @auth
+            <a href="{{ route('user.dashboard') }}">Account</a>
+            @endauth
         </div>
     </div>
 </div>
