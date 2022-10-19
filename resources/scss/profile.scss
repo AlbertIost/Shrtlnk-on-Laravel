@@ -1,0 +1,165 @@
+ *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+$color1: #00665E;
+$color2: #FF9340;
+$sidebar-opened-width: 250px;
+$sidebar-closed-width: 64px;
+$transition: all .3s ease-in-out;
+$shadow-box: 0 5px 20px rgb(0 0 0 / 50%);
+$shadow-card: 0 5px 20px rgb(0 0 0 / 10%);
+.wrapper{
+    position: relative;
+    .sidebar{
+        width: $sidebar-opened-width;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        background: $color1;
+        color: #fff;
+        box-shadow: $shadow-box;
+        transition: $transition;
+        ul{
+            padding: 0;
+            list-style: none;
+            li{
+                position: relative;
+                margin: 10px 0;
+                a{
+                    display: flex;
+                    align-items: center;
+                    color: #bdbdc7;
+                    text-decoration: none;
+                    padding: 10px 20px;
+                    font-size: 14px;
+                    font-family: sans-serif;
+                    transition: $transition;
+                    svg{
+                        width: 24px;
+                        height: 24px;
+                        fill: #bdbdc7;
+                        margin-right: 15px;
+                        transition: $transition;
+                    }
+                }
+                &:before{
+                    content: "";
+                    background: none;
+                    height: 100%;
+                    left: 0;
+                    position: absolute;
+                    top: 0;
+                    width: 3px;
+                    transition: $transition;
+                }
+                &.active, &:hover{
+                    a{
+                        color: #fff;
+                        svg{
+                            fill: #fff;
+                        }
+                    }
+                    &:before{
+                        background: $color2;
+                    }
+                }
+            }
+        }
+    }
+    .main{
+        margin-left: $sidebar-opened-width;
+        transition: $transition;
+        .header{
+            display: flex;
+            padding: 16px 24px;
+            box-shadow: $shadow-card;
+            .sidebar-toggle{
+                position: relative;
+                cursor: pointer;
+                .line{
+                    height: 3px;
+                    background: $color2;
+                    margin: 4px auto;
+                    transition: $transition;
+                }
+                .line-1{
+                    transform: translateX(-5px) translateY(3px) rotate(-45deg);
+                }
+                .line-3{
+                    transform: translateX(-5px) translateY(-3px) rotate(45deg);
+                }
+                .line-1, .line-3{
+                    width: 10px;
+                }
+                .line-2{
+                    width: 20px;
+                }
+                &.is-close{
+                    .line-1{
+                        transform: translateX(5px) translateY(3px) rotate(45deg);
+                    }
+                    .line-3{
+                        transform: translateX(5px) translateY(-3px) rotate(-45deg);
+                    }
+                }
+            }
+        }
+        .content-wrap{
+            padding-top: 20px;
+            .card-statistic{
+                box-shadow: $shadow-card;
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                padding: 14px;
+                border: 1px solid rgba(0,0,0,.125);
+                border-radius: 3px;
+                .icon-wrapper{
+                    padding: 8px;
+                    border: 2px solid $color2;
+                    border-radius: 50%;
+                    margin-right: 14px;
+                    svg{
+                        width: 40px;
+                        fill: $color1;
+                    }
+                }
+                .info{
+                    p{
+                        margin: 0;
+                        &.title{
+                            font-size: 14px;
+                            color: #868e96;
+                        }
+                        &.value{
+                            font-size: 24px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.sidebar-closed{
+        .sidebar{
+            width: $sidebar-closed-width;
+            ul{
+                li{
+                    a{
+                        font-size: 0;
+                        svg{
+                            margin: 0;
+                        }
+                    }
+                }
+            }
+        }
+        .main{
+            margin-left: $sidebar-closed-width;
+        }
+    }
+}
