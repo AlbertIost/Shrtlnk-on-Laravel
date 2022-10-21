@@ -27,7 +27,7 @@
 </div>
 <div class="main">
     <div class="form">
-        <form id="cut-form" action="/" method="POST">
+        <form id="cut-form" action="{{ route('user.links.create.post') }}" method="POST">
             @csrf
             <input class="link" id="link" name="link" type="text">
             <input class="btn " id="send" type="submit" value="Shrt">
@@ -50,8 +50,8 @@
             // Добавление решётки к имени ID
             var formNm = $('#' + formID);
             $.ajax({
-                type: "POST",
-                url: '/getlink',
+                type: $(this).attr('method'),
+                url: $(this).attr('action'),
                 data: formNm.serialize(),
                 beforeSend: function () {
                 },
