@@ -18,4 +18,7 @@ class Link extends Model
     public function transition(){
         return $this->hasMany(Transition::class);
     }
+    public function CountTransitions() : int {
+        return $this->transition->count();
+    }
 }
