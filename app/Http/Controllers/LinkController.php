@@ -39,6 +39,39 @@ class LinkController extends Controller
 
         return URL::to('/') .'/'. $row->token;
     }
+    public function CreateShortLink(Request $request){
+        $validate = $request->validate([
+            'link' => 'bail|required|unique:links|url',
+            'alias' => 'bail|nullable|unique:links,token|max:16',
+            'active_before' => 'nullable|date',
+            'password' => 'nullable|string'
+        ]);
+
+        $link = $request->input('link');
+        $alias = $request->input('alias');
+        $group = $request->input('group');
+        $password = $request->input('password');
+        $active_before = $request->input('active_before') ? Carbon::parse($request->input('active_before')) : null;
+
+        if(Group::find($group) === null && $group != 'no'){
+            return redirect(route('user.links.create'))->withErrors([
+               'group' => 'The selected group is invalid.'
+            ]);
+        }
+
+        Link::firstOrCreate(
+            [
+                'link' => $link
+            ],
+            [
+                'token' => $alias ?? self::GetNewToken(),
+                'group_id' => $group == 'no' ? null : '2',
+                'password' => $password != null ? Hash::make($password) : null,
+                'active_before' => $active_before,
+                'user_id' => auth()->user()->id
+            ]
+        );
+    }
     private function GetNewToken() : string{
         do{
             $token = Str::random(10);
