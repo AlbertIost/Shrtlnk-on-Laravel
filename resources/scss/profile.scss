@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 
-$color1: #00665E;
+$color1: #1b1f3b;
 $color2: #FF9340;
 $sidebar-opened-width: 250px;
 $sidebar-closed-width: 64px;
@@ -110,14 +110,19 @@ $shadow-card: 0 5px 20px rgb(0 0 0 / 10%);
         }
         .content-wrap{
             padding-top: 20px;
-            .card-statistic{
+            .block{
                 box-shadow: $shadow-card;
+                border: 1px solid rgba(0,0,0,.125);
+                border-radius: 3px;
+                padding: 14px;
+                margin: 0;
+            }
+            .card-statistic{
                 display: flex;
                 align-items: center;
                 flex-wrap: wrap;
-                padding: 14px;
-                border: 1px solid rgba(0,0,0,.125);
-                border-radius: 3px;
+                margin-bottom: 20px;
+
                 .icon-wrapper{
                     padding: 8px;
                     border: 2px solid $color2;
@@ -140,6 +145,13 @@ $shadow-card: 0 5px 20px rgb(0 0 0 / 10%);
                         }
                     }
                 }
+            }
+        }
+        .links{
+            margin: 0;
+            padding: 15px 15px 0 15px;
+            .wrapper-input{
+                margin-bottom: 15px;
             }
         }
     }
