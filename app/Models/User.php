@@ -51,6 +51,9 @@ class User extends Authenticatable
     public function link(){
         return $this->hasMany(Link::class);
     }
+    public function group(){
+        return $this->hasMany(Group::class);
+    }
 
     public function setPasswordAttribute($password){
         $this->attributes['password'] = Hash::make($password);
