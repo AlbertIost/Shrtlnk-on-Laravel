@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Link;
 use Illuminate\Http\Request;
 
 class MainPageController extends Controller
 {
-    public function Show(){
-        return view('main.show');
+    public static function Show(){
+        return view('mainPage');
     }
 }
