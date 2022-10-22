@@ -23,21 +23,32 @@ class LinkController extends Controller
             return abort(404);
     }
     public function LongToShort(Request $request){
-        $link = $request->input('link');
+        $validate = $request->validate([
+            'link' => 'bail|required|url'
+        ]);
+        $link = Link::where('link', $validate['link'])->first();
+        if($link === null){
+            $validate = $request->validate([
+                'link' => 'bail|required|url',
+                'alias' => 'bail|nullable|unique:links,token|max:16',
+                'password' => 'nullable|string'
+            ]);
 
-        $row = Link::firstOrCreate(
-            [
-                'link' => $link
-            ],
-            [
-                'token' => self::GetNewToken(),
-                'active_before' => Carbon::now()->addDays(7),
-                'user_id' => auth()->user() ? auth()->user()->id : null
-            ]
-        );
+            $newLink = new Link();
+            $newLink->link = $validate['link'];
+            $newLink->password = $validate['password'] != null ? Hash::make($validate['password']) : null;
+            $newLink->token = $validate['alias'];
+            $newLink->active_before = null;
+            $newLink->group_id = null;
+            $newLink->user_id = auth()->user() ? auth()->user()->id : null;
+            $newLink->save();
 
+            return view('mainPage', ['short_url' => URL::to('/') . '/' . $validate['token']]);
+        }
 
-        return URL::to('/') .'/'. $row->token;
+        $token = $link->token;
+
+        return view('mainPage', ['short_url' => URL::to('/') . '/' . $token]);
     }
     public function CreateShortLink(Request $request){
         $validate = $request->validate([
