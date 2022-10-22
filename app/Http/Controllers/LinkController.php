@@ -2,25 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Group;
 use App\Models\Transition;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Link;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
+use Termwind\Components\Li;
 
 class LinkController extends Controller
 {
-    public function RedirectByToken($token){
+    public function ShortToLong($token){
         $link = Link::where('token', '=', $token)->first();
 
         if($link != null){
-            Transition::Add($link);
+            if($link->password === null){
+                return self::Redir($link);
+            }
+            else{
 
-            return redirect($link->link);
+            }
         }
         else
             return abort(404);
+    }
+    private function Redir(Link $link){
+        Transition::Add($link);
+        return redirect($link->link);
     }
     public function LongToShort(Request $request){
         $validate = $request->validate([
