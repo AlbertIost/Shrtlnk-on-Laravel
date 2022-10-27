@@ -17,12 +17,12 @@ class LinkController extends Controller
     public function ShortToLong($token){
         $link = Link::where('token', '=', $token)->first();
 
-        if($link != null){
+        if($link !== null && $link->IsActive()){
             if($link->password === null){
                 return self::Redir($link);
             }
             else{
-
+                return view('user.closed_page', ['token' => $token]);
             }
         }
         else
