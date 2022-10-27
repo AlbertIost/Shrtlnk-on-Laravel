@@ -44,14 +44,15 @@ class LinkController extends Controller
                 'password' => 'nullable|string'
             ]);
 
-            $newLink = new Link();
-            $newLink->link = $validate['link'];
-            $newLink->password = $validate['password'] != null ? Hash::make($validate['password']) : null;
-            $newLink->token = $validate['alias'];
-            $newLink->active_before = null;
-            $newLink->group_id = null;
-            $newLink->user_id = auth()->user() ? auth()->user()->id : null;
-            $newLink->save();
+            $newLink = Link::create([
+                'link' => $validate['link'],
+                'token' => $validate['alias'] ?? Link::GetNewToken(),
+                'group_id' => null,
+                'password' => $validate['password'] !== null ? Hash::make($validate['password']) : null,
+                'active_before' => null,
+                'created_at' => Carbon::today(),
+                'user_id' => auth()->user() ? auth()->user()->id : null
+            ]);
 
             return view('mainPage', ['short_url' => URL::to('/') . '/' . $validate['token']]);
         }
