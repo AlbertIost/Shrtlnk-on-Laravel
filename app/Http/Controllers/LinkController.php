@@ -81,28 +81,62 @@ class LinkController extends Controller
             ]);
         }
 
-        Link::firstOrCreate(
-            [
-                'link' => $link
-            ],
-            [
-                'token' => $alias ?? self::GetNewToken(),
-                'group_id' => $group == 'no' ? null : '2',
-                'password' => $password != null ? Hash::make($password) : null,
-                'active_before' => $active_before,
-                'user_id' => auth()->user()->id
-            ]
-        );
+        Link::create([
+            'link' => $link,
+            'token' => $alias ?? Link::GetNewToken(),
+            'group_id' => $group == 'no' ? null : '2',
+            'password' => $password != null ? Hash::make($password) : null,
+            'active_before' => $active_before,
+            'created_at' => Carbon::today(),
+            'user_id' => auth()->user()->id
+        ]);
+        return redirect(route('user.links'));
     }
-    private function GetNewToken() : string{
-        do{
-            $token = Str::random(10);
-        } while(Link::where('token', '=', $token)->first() != null);
-        return $token;
-    }
-    public function ShowUserLinks(Request $request){
-        $links = Link::where('user_id', auth()->user()->id)->get();
 
-        return view('user.my_links', $links);
+    public function GetUserLinks(Request $request){
+        $user = auth()->user();
+        $links = Link::where('user_id', $user->id);
+
+        $created_from = $request->input('created_from');
+        $created_to = $request->input('created_to');
+
+        $sort_by = $request->input('sort_by');
+        $sort_by = in_array($sort_by, ['clicks', 'created_at']) ? $sort_by : 'clicks';
+
+        $order_by = $request->input('order_by');
+        $order_by = in_array($order_by, ['asc', 'desc']) ? $order_by : 'asc';
+
+        $group = $request->input('group');
+
+        if(is_numeric($group)){
+            $links->where('group_id', $group === '0' ? null : $group);
+        }
+
+        if(isset($created_from)){
+            $correct = true;
+            try{
+                Carbon::parse($created_from);
+            }
+            catch(InvalidFormatException){
+                $correct = false;
+            }
+            if($correct)
+                $links = $links->where('created_at', '>=', $created_from);
+        }
+        if(isset($created_to)){
+            $correct = true;
+            try{
+                Carbon::parse($created_to);
+            }
+            catch(InvalidFormatException $e){
+                $correct = false;
+            }
+            if($correct)
+                $links = $links->where('created_at', '<=', $created_to);
+        }
+
+        $links = $links->orderBy($sort_by, $order_by);
+
+        return view('user.my_links', ['links' => $links->get()]);
     }
 }
