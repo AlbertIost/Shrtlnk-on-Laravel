@@ -28,6 +28,29 @@ class LinkController extends Controller
         else
             return abort(404);
     }
+
+    public function TryAccessToClosedPage(Request $request, $token){
+        $validate = $request->validate([
+            'password' => 'required|string'
+        ]);
+
+        $link = Link::where('token', $token)->first();
+
+        if($link === null){
+            return back()->withErrors([
+                'password' => 'Link not found'
+            ]);
+        }
+
+        if(Hash::check($validate['password'], $link->password)){
+            return self::Redir($link);
+        }
+
+        return back()->withErrors([
+            'password' => 'Invalid password'
+        ]);
+    }
+
     private function Redir(Link $link){
         Transition::Add($link);
         return redirect($link->link);
