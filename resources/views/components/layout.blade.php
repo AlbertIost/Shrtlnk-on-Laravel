@@ -29,8 +29,8 @@
                         </div>
                     @endauth
                     @guest
-                        <div class="guest">
-                            <a href="{{ route('user.login') }}" class="mr-1">Sign in</a>
+                        <div class="guest d-flex">
+                            <a href="{{ route('user.login') }}" class="me-2">Sign in</a>
                             <a href="{{ route('user.registration') }}">Sign up</a>
                         </div>
                     @endguest
