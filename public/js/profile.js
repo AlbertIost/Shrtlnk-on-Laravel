@@ -20,4 +20,16 @@ $( document ).ready(function() {
             localStorage.setItem('sidebar_is', 'opened');
         }
     });
+
+    $('.copy-btn').click(function (){
+        var href = $(this).data('copy-text');
+        var input = document.createElement('input');
+        input.value = href;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand("copy");
+        document.body.removeChild(input);
+        $(this).children('.icon-copy').css('display', 'none');
+        $(this).children('.icon-ok').css('display', 'block');
+    });
 });
