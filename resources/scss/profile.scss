@@ -23,6 +23,19 @@ $shadow-card: 0 5px 20px rgb(0 0 0 / 10%);
         color: #fff;
         box-shadow: $shadow-box;
         transition: $transition;
+        .logo{
+            color: #fff;
+            font-size: 20px;
+            text-transform: uppercase;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 20px;
+            transition: $transition;
+            svg{
+                fill: $color2;
+                width: 32px;
+            }
+        }
         ul{
             padding: 0;
             list-style: none;
@@ -147,6 +160,67 @@ $shadow-card: 0 5px 20px rgb(0 0 0 / 10%);
                 }
             }
         }
+        .links-list{
+            table{
+                color: #6c757d;
+                border-collapse: collapse;
+                a{
+                    color: $color2;
+                }
+                .is-active{
+                    width: 16px;
+                }
+                td,th{
+                    padding: 12px;
+                }
+                .actions{
+                    height: 100%;
+                    a{
+                        padding: 0;
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 38px;
+                        height: 38px;
+                        transition: $transition;
+                        svg{
+                            width: 18px;
+                            transition: $transition;
+                        }
+                        &.copy{
+                            svg{
+                                fill: #0d6efd;
+                                &.icon-ok{
+                                    display: none;
+                                }
+                            }
+                        }
+                        &.edit svg, &.share svg{
+                            fill: #212529;
+                        }
+                        &.statistic svg{
+                            fill: #198754;
+                        }
+                        &.trash svg{
+                            fill: #dc3545;
+                        }
+                        &:hover svg{
+                            fill: #fff;
+                        }
+                    }
+                }
+                tr{
+                    border-bottom: 1px solid #dee2e6;
+                }
+                .text-truncate{
+                    max-width: 190px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+
+                }
+            }
+        }
         .links{
             margin: 0;
             padding: 15px 15px 0 15px;
@@ -159,6 +233,10 @@ $shadow-card: 0 5px 20px rgb(0 0 0 / 10%);
     &.sidebar-closed{
         .sidebar{
             width: $sidebar-closed-width;
+            .logo{
+                font-size: 0;
+                padding: 16px;
+            }
             ul{
                 li{
                     a{
