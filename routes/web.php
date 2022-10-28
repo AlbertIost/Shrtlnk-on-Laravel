@@ -20,7 +20,10 @@ use App\Http\Controllers\MainPageController;
 
 Route::get('/', [MainPageController::class, 'Show']);
 
-Route::post('/getlink', [LinkController::class, 'LongToShort']);
+Route::get('/test', [UserController::class, 'Test'])->name('test1');
+Route::get('/test2', [UserController::class, 'Test'])->name('test2');
+
+Route::post('/tryaccess/{token}', [LinkController::class, 'TryAccessToClosedPage'])->name('tryAccessToClosedPage');
 
 Route::name('user.')->group(function () {
     Route::get('/login', function(){
