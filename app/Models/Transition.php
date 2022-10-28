@@ -18,5 +18,8 @@ class Transition extends Model
         $transition->link_id = $link->id;
         $transition->created_on = Carbon::now();
         $transition->save();
+
+        $link->clicks++;
+        $link->save();
     }
 }
