@@ -18,7 +18,10 @@ use App\Http\Controllers\MainPageController;
 |
 */
 
-Route::get('/', [MainPageController::class, 'Show']);
+Route::get('/', [MainPageController::class, 'Show'])->name('mainPage');
+
+Route::post('/', [LinkController::class, 'LongToShort'])
+    ->name('getlink');
 
 Route::get('/test', [UserController::class, 'Test'])->name('test1');
 Route::get('/test2', [UserController::class, 'Test'])->name('test2');
