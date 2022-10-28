@@ -60,6 +60,9 @@ Route::name('user.')->group(function () {
             return view('user.cut_down');
         })->middleware('auth')->name('links.create');
 
+        Route::post('/create', [LinkController::class, 'CreateShortLink'])
+            ->name('links.create.post');
+
         Route::get('/groups', function (){
             return view('user.groups');
         })->middleware('auth')->name('links.groups');
@@ -75,6 +78,4 @@ Route::name('user.')->group(function () {
     })->name('logout');
 });
 
-Route::get('/test', [UserController::class, 'Test']);
-
-Route::get('/{token}', [LinkController::class, 'ShortToLong']);
+Route::get('/{token}', [LinkController::class, 'ClickOnShortLink'])->name('shortLink');
