@@ -58,9 +58,9 @@ Route::name('user.')->group(function () {
             return view('user.groups');
         })->middleware('auth')->name('links.groups');
 
-        Route::get('/', function (){
-            return view('user.my_links');
-        })->middleware('auth')->name('links');
+        Route::get('/', [LinkController::class, 'GetUserLinks'])->middleware('auth')->name('links');
+
+        Route::get('/{id}/edit', [LinkController::class, 'ShowEditLinkPage'])->middleware('auth')->name('links.edit');
     });
 
     Route::get('/logout', function(){
