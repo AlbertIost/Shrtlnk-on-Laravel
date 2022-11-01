@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Group;
 use App\Models\Transition;
 use Carbon\Carbon;
+use Carbon\Exceptions\InvalidFormatException;
 use Illuminate\Http\Request;
 use App\Models\Link;
 use Illuminate\Support\Facades\Hash;
@@ -14,7 +15,18 @@ use Termwind\Components\Li;
 
 class LinkController extends Controller
 {
-    public function ShortToLong($token){
+    public function ShowEditLinkPage($id){
+        $link = Link::find($id);
+        if(!isset($link)){
+            return abort(404, 'Link not found');
+        }
+        if( $link->user_id != auth()->user()->id){
+            return abort(403);
+        }
+        return view('user.edit_link', ['link' => $link]);
+    }
+
+    public function ClickOnShortLink($token){
         $link = Link::where('token', '=', $token)->first();
 
         if($link !== null && $link->IsActive()){
