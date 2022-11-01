@@ -15,6 +15,37 @@ use Termwind\Components\Li;
 
 class LinkController extends Controller
 {
+    public function EditLink($id, Request $request){
+        $group = $request->input('group');
+        if(Group::find($group) === null && $group != 'no'){
+            return back()->withErrors([
+                'group' => 'The selected group is invalid.'
+            ]);
+        }
+
+        $validate = $request->validate([
+            'active_before' => 'nullable|date'
+        ]);
+
+        $link = Link::find($id);
+
+        if(!isset($link)){
+            return abort(404, 'Link not found');
+        }
+        if( $link->user_id != auth()->user()->id){
+            return abort(403);
+        }
+
+        if($group !== null){
+            $link->group_id = $group === 'no' ? null : $group;
+        }
+
+        $link->active_before = $validate['active_before'] === null ? null : Carbon::parse($validate['active_before'])->format('Y-m-d');
+
+        $link->save();
+
+        return redirect(route('user.links'));
+    }
     public function ShowEditLinkPage($id){
         $link = Link::find($id);
         if(!isset($link)){
