@@ -3,7 +3,7 @@
     <div class="main">
         <x-profile.header/>
         <div class="content-wrap container-fluid">
-            <form class="links block row" action="{{ route('user.links.create.post') }}" method="POST">
+            <form class="links block row" action="{{ route('user.links.create') }}" method="POST">
                 @csrf
                 <div class="wrapper-input col-12">
                     <div class="form-group">
