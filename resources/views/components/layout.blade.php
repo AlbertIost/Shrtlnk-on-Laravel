@@ -24,7 +24,7 @@
                         <div class="auth">
                             <a href="{{ route('user.dashboard') }}">
                                 <x-icon.user/>
-                                <span>Personal account</span>
+                                <span>{{ auth()->user()->name }}</span>
                             </a>
                         </div>
                     @endauth
