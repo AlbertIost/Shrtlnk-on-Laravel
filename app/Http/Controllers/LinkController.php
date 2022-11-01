@@ -117,7 +117,7 @@ class LinkController extends Controller
         Link::create([
             'link' => $link,
             'token' => $alias ?? Link::GetNewToken(),
-            'group_id' => $group == 'no' ? null : '2',
+            'group_id' => $group === 'no' ? null : $group,
             'password' => $password != null ? Hash::make($password) : null,
             'active_before' => $active_before,
             'created_at' => Carbon::today(),
