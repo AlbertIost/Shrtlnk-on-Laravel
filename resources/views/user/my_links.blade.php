@@ -2,6 +2,29 @@
     <x-profile.sidebar/>
     <div class="main">
         <x-profile.header/>
+
+        {{--Modal start--}}
+        <div class="modal" tabindex="-1" id="modalDelete">
+            <div class="modal-dialog">
+                <form class="modal-content" method="post" action="{{ route('user.links.delete') }}">
+                    @csrf
+                    <input type="number" hidden id="inputId">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Delete link</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="m-0">Are you sure you want to delete the link?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger btn-delete">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {{--Modal end--}}
+
         <div class="content-wrap container-fluid">
             <form class="block links row" action="{{ route('user.links') }}" method="GET">
                 @csrf
@@ -68,8 +91,8 @@
                                 <td>
                                     <a href="">{{ $link->CountTransitions() }}</a>
                                 </td>
-                                <td>{{ \Carbon\Carbon::parse($link->created_at)->format('d M Y') }}</td>
-                                <td>{{ isset($link->active_before) ? \Carbon\Carbon::parse($link->active_before)->format('d M Y') : '—' }}</td>
+                                <td>{{ \Carbon\Carbon::parse($link->created_at)->format('d.m.Y') }}</td>
+                                <td>{{ isset($link->active_before) ? \Carbon\Carbon::parse($link->active_before)->format('d.m.Y') : '—' }}</td>
                                 <td>{{ $link->group !== null ? $link->group->name : '—' }}</td>
                                 <td>{{ $link->password !== null ? '********' : '—' }}</td>
                                 <td class="actions">
@@ -80,7 +103,7 @@
                                     <a class="statistic btn btn-outline-success" href="#"><x-icon.statistic/></a>
                                     <a class="edit btn btn-outline-dark" href="{{ route('user.links.edit', $link->id) }}"><x-icon.edit/></a>
                                     <a class="share btn btn-outline-dark" href="#"><x-icon.share/></a>
-                                    <a class="trash btn btn-outline-danger" href="#"><x-icon.trash/></a>
+                                    <button type="button" class="trash btn btn-outline-danger" data-linkId="{{ $link->id }}" data-bs-toggle="modal" data-bs-target="#modalDelete"><x-icon.trash/> </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -89,4 +112,16 @@
             </div>
         </div>
     </div>
+
+    <script src="{{ asset('js/bootstrap.js') }}"></script>
+    <script>
+        var modalDelete = document.getElementById('modalDelete')
+
+        modalDelete.addEventListener('shown.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var linkId = button.getAttribute('data-linkId');
+            var inputId = modalDelete.querySelector('#inputId');
+            inputId.setAttribute('value', linkId);
+        })
+    </script>
 </x-profile.layout>
