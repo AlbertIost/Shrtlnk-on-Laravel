@@ -14,15 +14,11 @@ class RegisterController extends Controller
             return redirect(route('user.dashboard'));
 
         $validateFields = $request->validate([
-            'email' => 'required|email',
+            'name' => 'required|regex:/[a-zA-Z]+/',
+            'email' => 'required|unique:users,email|email',
             'password' => 'required',
         ]);
 
-        if(User::where('email', '=', $validateFields['email'])->exists()){
-            return redirect(route('user.registration'))->withErrors([
-                'email' => 'Почта занята'
-            ]);
-        }
 
         $user = User::create($validateFields);
         if($user){
@@ -31,7 +27,7 @@ class RegisterController extends Controller
         }
 
         return redirect(route('user.registration'))->withErrors([
-            'registration error' => 'Произошла ошибка при регистрации'
+            'registration error' => 'An error occurred during registration'
         ]);
     }
 }
