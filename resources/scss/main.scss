@@ -55,6 +55,12 @@ a:hover{
             }
         }
         .user{
+            .auth a span{
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                max-width: 150px;
+            }
             a{
                 display: flex;
                 align-items: center;
