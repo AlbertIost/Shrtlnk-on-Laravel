@@ -109,7 +109,7 @@ class LinkController extends Controller
         $active_before = $request->input('active_before') ? Carbon::parse($request->input('active_before')) : null;
 
         if(Group::find($group) === null && $group != 'no'){
-            return redirect(route('user.links.create'))->withErrors([
+            return back()->withErrors([
                'group' => 'The selected group is invalid.'
             ]);
         }
