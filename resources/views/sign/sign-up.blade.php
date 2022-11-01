@@ -19,7 +19,7 @@
                     <a href="{{ route('user.login') }}" class="">Do you have an account? Sign in</a>
                     @csrf
                     <div class="input-group">
-                        <input type="text" class="@error('name') is-invalid @enderror name text form-control" name="name" placeholder="Your name">
+                        <input type="text" class="@error('name') is-invalid @enderror name text form-control" name="name" placeholder="First name">
                         @error('name')
                         <p class="invalid-tooltip">{{ $message }}</p>
                         @enderror
