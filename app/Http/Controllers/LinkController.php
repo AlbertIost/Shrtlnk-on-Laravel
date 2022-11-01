@@ -89,12 +89,10 @@ class LinkController extends Controller
                 'user_id' => auth()->user() ? auth()->user()->id : null
             ]);
 
-            return view('mainPage', ['short_url' => URL::to('/') . '/' . $validate['token']]);
+            return view('mainPage', ['short_url' => URL::to('/') . '/' . $newLink->token]);
         }
 
-        $token = $link->token;
-
-        return view('mainPage', ['short_url' => URL::to('/') . '/' . $token]);
+        return view('mainPage', ['short_url' => URL::to('/') . '/' . $link->token]);
     }
     public function CreateShortLink(Request $request){
         $validate = $request->validate([
